@@ -1,5 +1,5 @@
 name: Transformer
-main: me.vilsol.transformer.TransformerPlugin
+main: me.vilsol.transformer.bukkit.TransformerPlugin
 version: 0.0.1
 depends: [MenuEngine]
 commands:

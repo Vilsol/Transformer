@@ -1,6 +1,15 @@
-package me.vilsol.transformer.utils;
+package me.vilsol.transformer.bukkit.utils;
 
-import org.bukkit.block.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.BrewingStand;
+import org.bukkit.block.CommandBlock;
+import org.bukkit.block.CreatureSpawner;
+import org.bukkit.block.Furnace;
+import org.bukkit.block.Jukebox;
+import org.bukkit.block.NoteBlock;
+import org.bukkit.block.Sign;
+import org.bukkit.block.Skull;
 
 public class BlockUtils {
 
@@ -35,13 +44,15 @@ public class BlockUtils {
         } else if (s instanceof Sign && b.getState() instanceof Sign) {
             Sign d = (Sign) b.getState();
             int i = 0;
-            for (String x : ((Sign) s).getLines()) d.setLine(i++, x);
+            for (String x : ((Sign) s).getLines())
+                d.setLine(i++, x);
             d.update(true);
         } else if (s instanceof Skull && b.getState() instanceof Skull) {
             Skull d = (Skull) b.getState();
             d.setRotation(((Skull) s).getRotation());
             d.setSkullType(((Skull) s).getSkullType());
-            if (((Skull) s).hasOwner()) d.setOwner(((Skull) s).getOwner());
+            if (((Skull) s).hasOwner())
+                d.setOwner(((Skull) s).getOwner());
             d.update(true);
         }
     }

@@ -2,7 +2,9 @@ package me.vilsol.transformer.gui.controlcenter;
 
 import me.vilsol.menuengine.engine.MenuItem;
 import me.vilsol.menuengine.utils.Builder;
-import me.vilsol.transformer.engine.regions.CuboidRegion;
+import me.vilsol.transformer.engine.builder.BuildTask;
+import me.vilsol.transformer.managers.BuilderManager;
+import me.vilsol.transformer.managers.HandlerManager;
 import me.vilsol.transformer.managers.PositionManager;
 import me.vilsol.transformer.utils.ActionAPI;
 import org.bukkit.ChatColor;
@@ -20,14 +22,17 @@ public class TestItem implements MenuItem {
 
     @Override
     public void execute(Player plr, ClickType click) {
-        CuboidRegion region = PositionManager.getInstance().getRegion(plr);
+        PositionManager.getInstance().getRegion(plr, region -> {
+            plr.closeInventory();
 
-        if (region == null) {
-            ActionAPI.sendAction(plr, ChatColor.DARK_RED + "Please set both positions!");
-            return;
-        }
+            if (region == null) {
+                ActionAPI.sendAction(plr, ChatColor.DARK_RED + "Please set all positions!");
+                return;
+            }
 
-        PositionManager.getInstance().getRegion(plr).getEnclosedBlocks().stream().forEach(b -> b.setType(Material.STONE));
+            BuildTask task = new BuildTask(region, HandlerManager.getInstance().getHandler(plr).getAlgorithm());
+            BuilderManager.getInstance().addTask(task);
+        });
     }
 
     @Override

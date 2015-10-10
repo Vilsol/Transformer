@@ -1,8 +1,11 @@
 package me.vilsol.transformer.engine.regions;
 
+import me.vilsol.transformer.engine.ParamCallback;
+import me.vilsol.transformer.handlers.TransformerHandler;
 import me.vilsol.transformer.utils.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,21 @@ public class CuboidRegion implements TransformerRegion {
             }
         }
         return blocks;
+    }
+
+    @Override
+    public Vector getRelativePosition(Block block) {
+        return block.getLocation().subtract(positionOne).toVector();
+    }
+
+    @Override
+    public void newInstance(TransformerHandler handler, ParamCallback<TransformerRegion> callback) {
+        if(handler.getPositionOne() == null || handler.getPositionTwo() == null){
+            callback.callback(null);
+            return;
+        }
+
+        callback.callback(new CuboidRegion(handler.getPositionOne(), handler.getPositionTwo()));
     }
 
 }

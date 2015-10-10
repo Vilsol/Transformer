@@ -1,6 +1,7 @@
 package me.vilsol.transformer.managers;
 
-import me.vilsol.transformer.engine.regions.CuboidRegion;
+import me.vilsol.transformer.engine.ParamCallback;
+import me.vilsol.transformer.engine.regions.TransformerRegion;
 import me.vilsol.transformer.handlers.TransformerHandler;
 
 public class PositionManager {
@@ -14,14 +15,9 @@ public class PositionManager {
     private PositionManager() {
     }
 
-    public CuboidRegion getRegion(Object owner){
+    public void getRegion(Object owner, ParamCallback<TransformerRegion> callback){
         TransformerHandler handler = HandlerManager.getInstance().getHandler(owner);
-
-        if(handler.getPositionOne() == null || handler.getPositionTwo() == null){
-            return null;
-        }
-
-        return new CuboidRegion(handler.getPositionOne(), handler.getPositionTwo());
+        handler.getRegionType().newInstance(handler, callback);
     }
 
 }

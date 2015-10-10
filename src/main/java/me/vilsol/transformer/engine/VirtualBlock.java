@@ -127,10 +127,20 @@ public class VirtualBlock {
         state = blockState;
     }
 
+
     /**
      * Places the block in the world
      */
-    public boolean buildBlock() {
+    public boolean buildBlock(){
+        return buildBlock(loc);
+    }
+
+    /**
+     * Places the block in the world
+     *
+     * @param loc The location of the new block
+     */
+    public boolean buildBlock(Location loc) {
         if(loc != null) {
             final Block realBlock = loc.getBlock();
             if(realBlock.getState() instanceof InventoryHolder) {

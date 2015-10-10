@@ -5,6 +5,10 @@ import org.bukkit.Location;
 public class LocationUtils {
 
     public static Location getLowestPosition(Location positionOne, Location positionTwo){
+        if(positionOne == null || positionTwo == null){
+            return null;
+        }
+
         double lowX = Math.min(positionOne.getX(), positionTwo.getX());
         double lowY = Math.min(positionOne.getY(), positionTwo.getY());
         double lowZ = Math.min(positionOne.getZ(), positionTwo.getZ());
@@ -12,6 +16,10 @@ public class LocationUtils {
     }
 
     public static Location getHighestPosition(Location positionOne, Location positionTwo){
+        if(positionOne == null || positionTwo == null){
+            return null;
+        }
+
         double lowX = Math.max(positionOne.getX(), positionTwo.getX());
         double lowY = Math.max(positionOne.getY(), positionTwo.getY());
         double lowZ = Math.max(positionOne.getZ(), positionTwo.getZ());

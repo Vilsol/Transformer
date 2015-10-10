@@ -1,8 +1,14 @@
 package me.vilsol.transformer.utils;
 
+import org.bukkit.Material;
 import org.bukkit.block.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class BlockUtils {
+
+    private static List<Material> transparentBlocks = Arrays.asList(Material.ACTIVATOR_RAIL, Material.ANVIL, Material.BED, Material.BED_BLOCK, Material.BROWN_MUSHROOM, Material.CACTUS, Material.CAKE_BLOCK, Material.CROPS, Material.DEAD_BUSH, Material.DETECTOR_RAIL, Material.DIODE, Material.DIODE_BLOCK_OFF, Material.DIODE_BLOCK_OFF, Material.DRAGON_EGG, Material.ITEM_FRAME, Material.LADDER, Material.LAVA, Material.NETHER_WARTS, Material.PAINTING, Material.POWERED_RAIL, Material.RAILS, Material.REDSTONE_COMPARATOR, Material.REDSTONE_COMPARATOR_OFF, Material.REDSTONE_COMPARATOR_ON, Material.REDSTONE_TORCH_OFF, Material.REDSTONE_TORCH_ON, Material.REDSTONE_WIRE, Material.SAND, Material.SAPLING, Material.SEEDS, Material.SIGN, Material.SIGN_POST, Material.STATIONARY_LAVA, Material.STATIONARY_WATER, Material.SUGAR_CANE_BLOCK, Material.TORCH, Material.TRAP_DOOR, Material.TRIPWIRE, Material.TRIPWIRE_HOOK, Material.VINE, Material.WALL_SIGN, Material.WATER, Material.WATER_LILY, Material.WOOD_DOOR, Material.IRON_DOOR, Material.WOOD_PLATE, Material.STONE_PLATE, Material.GOLD_PLATE, Material.IRON_PLATE, Material.WOOD_BUTTON, Material.STONE_BUTTON, Material.LEVER, Material.GRAVEL, Material.CARROT, Material.POTATO);
 
     public static void setStates(BlockState s, Block b) {
         if (s instanceof BrewingStand && b.getState() instanceof BrewingStand) {
@@ -44,6 +50,15 @@ public class BlockUtils {
             if (((Skull) s).hasOwner()) d.setOwner(((Skull) s).getOwner());
             d.update(true);
         }
+    }
+
+    /**
+     * Returns whether or not the provided block is transparent
+     * @param material The material to check
+     * @return Is the material transparent
+     */
+    public static boolean isTransparent(Material material) {
+        return transparentBlocks.contains(material);
     }
 
 }

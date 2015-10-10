@@ -6,7 +6,7 @@
 
     <groupId>me.vilsol</groupId>
     <artifactId>transformer</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <name>Transformer</name>
     <description>Easy to use world transformation plugin for Bukkit</description>

@@ -73,4 +73,14 @@ public class TLocation implements Cloneable {
         return new TLocation(world, this.x + x, this.y + y, this.z + z);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (o == null || !(o instanceof TLocation))
+            return false;
+        TLocation l = (TLocation) o;
+        return l.world.getName().equals(world.getName()) && l.x == x && l.y == y && l.z == z && l.yaw == yaw && l.pitch == pitch;
+    }
+
 }

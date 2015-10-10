@@ -54,4 +54,14 @@ public class TVector implements Cloneable {
         return new TLocation(world, x, y, z);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (o == null || !(o instanceof TVector))
+            return false;
+        TVector v = (TVector) o;
+        return v.x == x && v.y == y && v.z == z;
+    }
+
 }

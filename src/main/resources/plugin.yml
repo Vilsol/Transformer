@@ -1,0 +1,8 @@
+name: Transformer
+main: me.vilsol.transformer.TransformerPlugin
+version: 0.0.1
+depends: [MenuEngine]
+commands:
+  //:
+    usage: //
+    description: "Open Control GUI"

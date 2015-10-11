@@ -18,9 +18,13 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class WandListener implements Listener {
+
+    private List<Block> pinging = new ArrayList<>();
 
     @EventHandler
     public void onWandClick(PlayerInteractEvent event) {
@@ -44,12 +48,19 @@ public class WandListener implements Listener {
             }
 
             if(ok){
+                if(pinging.contains(targetBlock)){
+                    return;
+                }
+
+                pinging.add(targetBlock);
                 VirtualBlock previousBlock = new VirtualBlock(targetBlock);
-                targetBlock.setType(Material.GLOWSTONE);
+                targetBlock.setType(Material.JACK_O_LANTERN, false);
+                final Block finalTargetBlock = targetBlock;
                 new BukkitRunnable(){
                     @Override
                     public void run() {
                         previousBlock.buildBlock();
+                        pinging.remove(finalTargetBlock);
                     }
                 }.runTaskLater(TransformerPlugin.getInstance(), 10L);
             }

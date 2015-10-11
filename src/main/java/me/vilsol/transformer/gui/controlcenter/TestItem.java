@@ -3,6 +3,7 @@ package me.vilsol.transformer.gui.controlcenter;
 import me.vilsol.menuengine.engine.MenuItem;
 import me.vilsol.menuengine.utils.Builder;
 import me.vilsol.transformer.engine.builder.BuildTask;
+import me.vilsol.transformer.handlers.PlayerHandler;
 import me.vilsol.transformer.managers.BuilderManager;
 import me.vilsol.transformer.managers.HandlerManager;
 import me.vilsol.transformer.managers.PositionManager;
@@ -30,7 +31,8 @@ public class TestItem implements MenuItem {
                 return;
             }
 
-            BuildTask task = new BuildTask(region, HandlerManager.getInstance().getHandler(plr).getAlgorithm());
+            PlayerHandler handler = (PlayerHandler) HandlerManager.getInstance().getHandler(plr);
+            BuildTask task = new BuildTask(region, handler.getAlgorithm(), handler);
             BuilderManager.getInstance().addTask(task);
         });
     }

@@ -1,17 +1,16 @@
 package me.vilsol.transformer.handlers;
 
-import me.vilsol.transformer.engine.builder.BuildTask;
 import me.vilsol.transformer.engine.VirtualBlock;
 import me.vilsol.transformer.engine.algorithms.ActionAlgorithm;
 import me.vilsol.transformer.engine.algorithms.ReplaceAlgorithm;
+import me.vilsol.transformer.engine.tasks.BuildTask;
 import me.vilsol.transformer.engine.regions.RegionType;
-import org.bukkit.Location;
+import me.vilsol.transformer.engine.selection.Selection;
 import org.bukkit.Material;
 
 public abstract class TransformerHandler<T> {
 
-    private Location positionOne;
-    private Location positionTwo;
+    private Selection selection;
 
     private ActionAlgorithm algorithm = new ReplaceAlgorithm(new VirtualBlock(Material.STONE));
     private RegionType regionType = RegionType.CUBOID;
@@ -27,20 +26,12 @@ public abstract class TransformerHandler<T> {
         return owner;
     }
 
-    public Location getPositionOne() {
-        return positionOne;
+    public Selection getSelection() {
+        return selection;
     }
 
-    public void setPositionOne(Location positionOne) {
-        this.positionOne = positionOne;
-    }
-
-    public Location getPositionTwo() {
-        return positionTwo;
-    }
-
-    public void setPositionTwo(Location positionTwo) {
-        this.positionTwo = positionTwo;
+    public void setSelection(Selection selection) {
+        this.selection = selection;
     }
 
     public ActionAlgorithm getAlgorithm() {

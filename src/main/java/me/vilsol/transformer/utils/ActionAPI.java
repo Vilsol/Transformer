@@ -15,14 +15,9 @@ public class ActionAPI {
     }
 
     public static void sendAction(Player p, String msg) {
-        sendAction(p, msg, false);
-    }
-
-    public static void sendAction(Player p, String msg, boolean bold) {
         try {
             JSONObject message = new JSONObject();
             message.put("text", msg);
-            message.put("bold", bold);
 
             String version = getServerVersion();
             String nmsClass = (version.startsWith("v1_8_R") ? "IChatBaseComponent$" : "") + "ChatSerializer";

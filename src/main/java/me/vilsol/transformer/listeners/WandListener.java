@@ -4,7 +4,11 @@ import me.vilsol.menuengine.engine.MenuModel;
 import me.vilsol.transformer.R;
 import me.vilsol.transformer.TransformerPlugin;
 import me.vilsol.transformer.engine.VirtualBlock;
+import me.vilsol.transformer.engine.selection.OnePointSelection;
+import me.vilsol.transformer.engine.selection.Selection;
+import me.vilsol.transformer.engine.selection.TwoPointSelection;
 import me.vilsol.transformer.gui.ControlCenter;
+import me.vilsol.transformer.handlers.TransformerHandler;
 import me.vilsol.transformer.managers.HandlerManager;
 import me.vilsol.transformer.utils.ActionAPI;
 import org.bukkit.ChatColor;
@@ -37,14 +41,31 @@ public class WandListener implements Listener {
 
             boolean ok = false;
             Action action = event.getAction();
-            if (action.equals(Action.LEFT_CLICK_AIR) || action.equals(Action.LEFT_CLICK_BLOCK)) {
-                ok = true;
-                HandlerManager.getInstance().getHandler(event.getPlayer()).setPositionOne(targetBlock.getLocation());
-                ActionAPI.sendAction(event.getPlayer(), ChatColor.DARK_GREEN + "Position 1 Set", true);
-            } else if (action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK)) {
-                ok = true;
-                HandlerManager.getInstance().getHandler(event.getPlayer()).setPositionTwo(targetBlock.getLocation());
-                ActionAPI.sendAction(event.getPlayer(), ChatColor.DARK_GREEN + "Position 2 Set", true);
+            TransformerHandler handler = HandlerManager.getInstance().getHandler(event.getPlayer());
+            Selection selection = handler.getSelection();
+
+            if(!handler.getRegionType().getSelection().equalClass(selection)){
+                selection = handler.getRegionType().getSelection().newInstance();
+                handler.setSelection(selection);
+            }
+
+            switch(handler.getRegionType().getSelection()){
+                case ONE_POINT:
+                    ok = true;
+                    ((OnePointSelection) selection).setPoint(targetBlock.getLocation());
+                    ActionAPI.sendAction(event.getPlayer(), ChatColor.DARK_GREEN + "Position Set");
+                    break;
+                case TWO_POINTS:
+                    if (action.equals(Action.LEFT_CLICK_AIR) || action.equals(Action.LEFT_CLICK_BLOCK)) {
+                        ok = true;
+                        ((TwoPointSelection) selection).setPositionOne(targetBlock.getLocation());
+                        ActionAPI.sendAction(event.getPlayer(), ChatColor.DARK_GREEN + "Position 1 Set");
+                    } else if (action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK)) {
+                        ok = true;
+                        ((TwoPointSelection) selection).setPositionTwo(targetBlock.getLocation());
+                        ActionAPI.sendAction(event.getPlayer(), ChatColor.DARK_GREEN + "Position 2 Set");
+                    }
+                    break;
             }
 
             if(ok){

@@ -2,6 +2,7 @@ package me.vilsol.transformer;
 
 import me.vilsol.menuengine.engine.MenuModel;
 import me.vilsol.transformer.gui.ControlCenter;
+import me.vilsol.transformer.gui.controlcenter.SwitchToNeighbor;
 import me.vilsol.transformer.gui.controlcenter.TestItem;
 import me.vilsol.transformer.gui.controlcenter.Wand;
 import me.vilsol.transformer.listeners.WandListener;
@@ -47,6 +48,7 @@ public class TransformerPlugin extends JavaPlugin implements Listener {
     }
 
     private void registerMenus() {
+        new SwitchToNeighbor().registerItem();
         new TestItem().registerItem();
 
         new Wand().registerItem();

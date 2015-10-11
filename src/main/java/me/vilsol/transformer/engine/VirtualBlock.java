@@ -132,21 +132,22 @@ public class VirtualBlock {
      * Places the block in the world
      */
     public boolean buildBlock(){
-        return buildBlock(loc);
+        return buildBlock(loc, true);
     }
 
     /**
      * Places the block in the world
      *
      * @param loc The location of the new block
+     * @param phys Whether to run physics or not
      */
-    public boolean buildBlock(Location loc) {
+    public boolean buildBlock(Location loc, boolean phys) {
         if(loc != null) {
             final Block realBlock = loc.getBlock();
             if(realBlock.getState() instanceof InventoryHolder) {
                 ((InventoryHolder) realBlock.getState()).getInventory().clear();
             }
-            realBlock.setType(mat);
+            realBlock.setType(mat, phys);
             if(data != null) {
                 realBlock.setData(data);
             } else {

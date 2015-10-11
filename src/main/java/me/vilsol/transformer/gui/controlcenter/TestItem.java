@@ -2,13 +2,11 @@ package me.vilsol.transformer.gui.controlcenter;
 
 import me.vilsol.menuengine.engine.MenuItem;
 import me.vilsol.menuengine.utils.Builder;
-import me.vilsol.transformer.engine.builder.BuildTask;
+import me.vilsol.transformer.engine.tasks.BuildTask;
 import me.vilsol.transformer.handlers.PlayerHandler;
-import me.vilsol.transformer.managers.BuilderManager;
+import me.vilsol.transformer.managers.TaskManager;
 import me.vilsol.transformer.managers.HandlerManager;
 import me.vilsol.transformer.managers.PositionManager;
-import me.vilsol.transformer.utils.ActionAPI;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -27,13 +25,12 @@ public class TestItem implements MenuItem {
             plr.closeInventory();
 
             if (region == null) {
-                ActionAPI.sendAction(plr, ChatColor.DARK_RED + "Please set all positions!");
                 return;
             }
 
             PlayerHandler handler = (PlayerHandler) HandlerManager.getInstance().getHandler(plr);
             BuildTask task = new BuildTask(region, handler.getAlgorithm(), handler);
-            BuilderManager.getInstance().addTask(task);
+            TaskManager.getInstance().addTask(task);
         });
     }
 

@@ -1,4 +1,4 @@
-package me.vilsol.transformer.engine.builder;
+package me.vilsol.transformer.engine.tasks;
 
 import me.vilsol.transformer.engine.algorithms.ActionAlgorithm;
 import me.vilsol.transformer.engine.regions.TransformerRegion;
@@ -9,7 +9,7 @@ import org.bukkit.util.Vector;
 import java.util.Iterator;
 import java.util.List;
 
-public class BuildTask {
+public class BuildTask extends Task {
 
     private TransformerRegion region;
     private ActionAlgorithm algorithm;
@@ -21,18 +21,15 @@ public class BuildTask {
     private double placedBlocks;
 
     private boolean normal;
-    private boolean finished;
-
-    private PlayerHandler watcher;
 
     public BuildTask(TransformerRegion region, ActionAlgorithm algorithm) {
         this(region, algorithm, null);
     }
 
     public BuildTask(TransformerRegion region, ActionAlgorithm algorithm, PlayerHandler watcher) {
+        super(watcher);
         this.region = region;
         this.algorithm = algorithm;
-        this.watcher = watcher;
 
         List<Block> normalBlocks = region.getNormalBlocks();
         List<Block> transparentBlocks = region.getTransparentBlocks();
@@ -43,11 +40,7 @@ public class BuildTask {
         this.transparentIterator = transparentBlocks.iterator();
     }
 
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void buildNext() {
+    public void tick() {
         Block block = null;
 
         try {
@@ -72,14 +65,6 @@ public class BuildTask {
         Vector relativePosition = region.getRelativePosition(block);
         algorithm.applyToBlock(block, relativePosition);
         placedBlocks++;
-    }
-
-    public PlayerHandler getWatcher() {
-        return watcher;
-    }
-
-    public void setWatcher(PlayerHandler watcher) {
-        this.watcher = watcher;
     }
 
     public double getProgress() {

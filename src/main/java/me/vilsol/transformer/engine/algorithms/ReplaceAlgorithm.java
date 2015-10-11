@@ -14,7 +14,7 @@ public class ReplaceAlgorithm implements ActionAlgorithm {
 
     @Override
     public void applyToBlock(Block b, Vector relativePosition) {
-        replacement.buildBlock(b.getLocation());
+        replacement.buildBlock(b.getLocation(), false);
     }
 
     public VirtualBlock getReplacement() {

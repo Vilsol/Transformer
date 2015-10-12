@@ -69,4 +69,14 @@ public class SearchNeighborsTask extends Task {
         return -1;
     }
 
+    @Override
+    public int getParsedBlocks() {
+        return searched;
+    }
+
+    @Override
+    public int getTotalBlocks() {
+        return -1;
+    }
+
 }

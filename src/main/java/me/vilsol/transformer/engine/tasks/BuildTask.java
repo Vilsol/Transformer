@@ -71,4 +71,14 @@ public class BuildTask extends Task {
         return (100d / totalBlocks) * placedBlocks;
     }
 
+    @Override
+    public int getParsedBlocks() {
+        return (int) placedBlocks;
+    }
+
+    @Override
+    public int getTotalBlocks() {
+        return (int) totalBlocks;
+    }
+
 }

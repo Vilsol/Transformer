@@ -15,6 +15,10 @@ public abstract class Task {
 
     public abstract double getProgress();
 
+    public abstract int getParsedBlocks();
+
+    public abstract int getTotalBlocks();
+
     public PlayerHandler getWatcher() {
         return watcher;
     }

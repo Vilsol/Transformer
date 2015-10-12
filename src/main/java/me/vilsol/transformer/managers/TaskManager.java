@@ -66,10 +66,10 @@ public class TaskManager extends BukkitRunnable {
 
             if(tick % 5 == 0) {
                 watchers.entrySet().stream().forEach(set -> {
-                    String line = ChatColor.AQUA + "[";
+                    String line;
 
                     if(set.getKey().getProgress() >= 0) {
-                        line += ChatColor.DARK_GREEN;
+                        line = ChatColor.DARK_GREEN.toString();
                         int switchPoint = (int) (set.getKey().getProgress() * 0.3);
                         for (int i = 0; i < 30; i++) {
                             if (i == 15) {
@@ -86,22 +86,39 @@ public class TaskManager extends BukkitRunnable {
                             }
                         }
                     }else{
-                        int position = (tick % 105) / 5;
-                        line += ChatColor.DARK_RED;
-                        for (int i = 0; i < Math.min(20, position); i++) {
-                            line += "-";
-                        }
+                        line = ChatColor.DARK_RED.toString();
+                        int position = (tick % 155) / 5;
+                        String text = " " + set.getKey().getParsedBlocks() + " ";
 
-                        line += ChatColor.DARK_GREEN + "==========" + ChatColor.DARK_RED;
+                        for (int i = 0; i < 30; i++) {
+                            if(i == position){
+                                line += ChatColor.DARK_GREEN;
+                            }else if(i == position + 11){
+                                line += ChatColor.DARK_RED;
+                            }
 
-                        for (int i = position; i < 20; i++) {
-                            line += "-";
+                            if(i >= (15 - text.length() / 2) && i < (15 + Math.ceil(text.length() / 2d))){
+                                int insertPos = i - (15 - text.length() / 2);
+                                line += text.substring(insertPos, insertPos + 1);
+                            }else if(position > 20 && i <= (position + 10) - 31){
+                                if(i == 0){
+                                    line += ChatColor.DARK_GREEN;
+                                }
+
+                                line += "=";
+
+                                if(i == (position + 10) - 31){
+                                    line += ChatColor.DARK_RED;
+                                }
+                            }else if(i >= position && i <= position + 10){
+                                line += "=";
+                            }else{
+                                line += "-";
+                            }
                         }
                     }
 
-                    line += ChatColor.AQUA + "]";
-
-                    ActionAPI.sendAction(set.getValue().getOwner(), line);
+                    ActionAPI.sendAction(set.getValue().getOwner(), ChatColor.AQUA + "[" + line + ChatColor.AQUA + "]");
                 });
             }
         }

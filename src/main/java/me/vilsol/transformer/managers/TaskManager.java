@@ -3,12 +3,14 @@ package me.vilsol.transformer.managers;
 import me.vilsol.transformer.R;
 import me.vilsol.transformer.TransformerPlugin;
 import me.vilsol.transformer.engine.tasks.Task;
-import me.vilsol.transformer.handlers.PlayerHandler;
+import me.vilsol.transformer.handlers.TransformerHandler;
 import me.vilsol.transformer.utils.ActionAPI;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -36,7 +38,7 @@ public class TaskManager extends BukkitRunnable {
     @Override
     public void run() {
         if(tasks.size() > 0) {
-            HashMap<Task, PlayerHandler> watchers = new HashMap<>();
+            HashMap<Task, TransformerHandler<Player>> watchers = new HashMap<>();
             long start = System.currentTimeMillis();
             for (int i = 0; i < R.globalLimit; i++) {
                 List<Task> toRemove = new ArrayList<>();
@@ -49,6 +51,11 @@ public class TaskManager extends BukkitRunnable {
 
                     if (task.isFinished()) {
                         toRemove.add(task);
+
+                        if(task.getOwner() != null && task.getUndo() != null){
+                            Collections.reverse(task.getUndo());
+                            task.getOwner().getUndoHistory().add(task.getUndo());
+                        }
 
                         watchers.remove(task);
                         if (task.getWatcher() != null) {

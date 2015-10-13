@@ -21,6 +21,8 @@ public class TestItem implements MenuItem {
 
     @Override
     public void execute(Player plr, ClickType click) {
+        plr.closeInventory();
+
         PositionManager.getInstance().getRegion(plr, region -> {
             plr.closeInventory();
 
@@ -29,7 +31,7 @@ public class TestItem implements MenuItem {
             }
 
             PlayerHandler handler = (PlayerHandler) HandlerManager.getInstance().getHandler(plr);
-            BuildTask task = new BuildTask(region, handler.getAlgorithm(), handler);
+            BuildTask task = new BuildTask(handler, region, handler.getAlgorithm(), handler);
             TaskManager.getInstance().addTask(task);
         });
     }

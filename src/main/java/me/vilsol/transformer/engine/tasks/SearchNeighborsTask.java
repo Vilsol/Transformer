@@ -1,12 +1,14 @@
 package me.vilsol.transformer.engine.tasks;
 
 import me.vilsol.transformer.engine.ParamCallback;
+import me.vilsol.transformer.engine.VirtualBlock;
 import me.vilsol.transformer.engine.regions.NeighborRegion;
 import me.vilsol.transformer.engine.regions.TransformerRegion;
-import me.vilsol.transformer.handlers.PlayerHandler;
+import me.vilsol.transformer.handlers.TransformerHandler;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,12 +27,12 @@ public class SearchNeighborsTask extends Task {
     private ListIterator<Block> i;
     private int searched = 0;
 
-    public SearchNeighborsTask(List<Block> enclosedBlocks, NeighborRegion region, ParamCallback<TransformerRegion> callback) {
-        this(null, enclosedBlocks, region, callback);
+    public SearchNeighborsTask(TransformerHandler owner, List<Block> enclosedBlocks, NeighborRegion region, ParamCallback<TransformerRegion> callback) {
+        this(owner, null, enclosedBlocks, region, callback);
     }
 
-    public SearchNeighborsTask(PlayerHandler watcher, List<Block> enclosedBlocks, NeighborRegion region, ParamCallback<TransformerRegion> callback) {
-        super(watcher);
+    public SearchNeighborsTask(TransformerHandler owner, TransformerHandler<Player> watcher, List<Block> enclosedBlocks, NeighborRegion region, ParamCallback<TransformerRegion> callback) {
+        super(owner, watcher);
         this.enclosedBlocks = enclosedBlocks;
         this.callback = callback;
         this.region = region;
@@ -77,6 +79,11 @@ public class SearchNeighborsTask extends Task {
     @Override
     public int getTotalBlocks() {
         return -1;
+    }
+
+    @Override
+    public List<VirtualBlock> getUndo() {
+        return null;
     }
 
 }

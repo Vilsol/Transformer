@@ -3,10 +3,13 @@ package me.vilsol.transformer.handlers;
 import me.vilsol.transformer.engine.VirtualBlock;
 import me.vilsol.transformer.engine.algorithms.ActionAlgorithm;
 import me.vilsol.transformer.engine.algorithms.ReplaceAlgorithm;
-import me.vilsol.transformer.engine.tasks.BuildTask;
 import me.vilsol.transformer.engine.regions.RegionType;
 import me.vilsol.transformer.engine.selection.Selection;
+import me.vilsol.transformer.engine.tasks.BuildTask;
 import org.bukkit.Material;
+
+import java.util.List;
+import java.util.Stack;
 
 public abstract class TransformerHandler<T> {
 
@@ -15,6 +18,8 @@ public abstract class TransformerHandler<T> {
     private ActionAlgorithm algorithm = new ReplaceAlgorithm(new VirtualBlock(Material.STONE));
     private RegionType regionType = RegionType.CUBOID;
     private BuildTask lastTask;
+
+    private Stack<List<VirtualBlock>> undoHistory = new Stack<>();
 
     private T owner;
 
@@ -56,6 +61,10 @@ public abstract class TransformerHandler<T> {
 
     public void setLastTask(BuildTask lastTask) {
         this.lastTask = lastTask;
+    }
+
+    public Stack<List<VirtualBlock>> getUndoHistory() {
+        return undoHistory;
     }
 
 }

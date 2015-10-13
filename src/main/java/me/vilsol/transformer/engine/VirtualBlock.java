@@ -135,6 +135,16 @@ public class VirtualBlock {
         return buildBlock(loc, true);
     }
 
+
+    /**
+     * Places the block in the world
+     *
+     * @param phys Whether to run physics or not
+     */
+    public boolean buildBlock(boolean phys){
+        return buildBlock(loc, phys);
+    }
+
     /**
      * Places the block in the world
      *

@@ -49,9 +49,9 @@ public class NeighborRegion implements TransformerRegion {
         enclosedBlocks.clear();
 
         if(handler instanceof PlayerHandler) {
-            TaskManager.getInstance().addTask(new SearchNeighborsTask((PlayerHandler) handler, enclosedBlocks, this, callback));
+            TaskManager.getInstance().addTask(new SearchNeighborsTask(handler, handler, enclosedBlocks, this, callback));
         }else{
-            TaskManager.getInstance().addTask(new SearchNeighborsTask(enclosedBlocks, this, callback));
+            TaskManager.getInstance().addTask(new SearchNeighborsTask(handler, enclosedBlocks, this, callback));
         }
     }
 

@@ -4,6 +4,7 @@ import me.vilsol.menuengine.engine.MenuModel;
 import me.vilsol.transformer.gui.ControlCenter;
 import me.vilsol.transformer.gui.controlcenter.SwitchToNeighbor;
 import me.vilsol.transformer.gui.controlcenter.TestItem;
+import me.vilsol.transformer.gui.controlcenter.Undo;
 import me.vilsol.transformer.gui.controlcenter.Wand;
 import me.vilsol.transformer.listeners.WandListener;
 import org.bukkit.command.CommandExecutor;
@@ -50,6 +51,7 @@ public class TransformerPlugin extends JavaPlugin implements Listener {
     private void registerMenus() {
         new SwitchToNeighbor().registerItem();
         new TestItem().registerItem();
+        new Undo().registerItem();
 
         new Wand().registerItem();
 

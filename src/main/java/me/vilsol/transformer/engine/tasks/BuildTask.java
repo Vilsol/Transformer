@@ -1,11 +1,14 @@
 package me.vilsol.transformer.engine.tasks;
 
+import me.vilsol.transformer.engine.VirtualBlock;
 import me.vilsol.transformer.engine.algorithms.ActionAlgorithm;
 import me.vilsol.transformer.engine.regions.TransformerRegion;
 import me.vilsol.transformer.handlers.PlayerHandler;
+import me.vilsol.transformer.handlers.TransformerHandler;
 import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,16 +21,18 @@ public class BuildTask extends Task {
     private Iterator<Block> transparentIterator;
 
     private double totalBlocks;
-    private double placedBlocks;
+    private double parsedBlocks;
+
+    private List<VirtualBlock> history = new ArrayList<>();
 
     private boolean normal;
 
-    public BuildTask(TransformerRegion region, ActionAlgorithm algorithm) {
-        this(region, algorithm, null);
+    public BuildTask(TransformerHandler owner, TransformerRegion region, ActionAlgorithm algorithm) {
+        this(owner, region, algorithm, null);
     }
 
-    public BuildTask(TransformerRegion region, ActionAlgorithm algorithm, PlayerHandler watcher) {
-        super(watcher);
+    public BuildTask(TransformerHandler owner, TransformerRegion region, ActionAlgorithm algorithm, PlayerHandler watcher) {
+        super(owner, watcher);
         this.region = region;
         this.algorithm = algorithm;
 
@@ -62,23 +67,30 @@ public class BuildTask extends Task {
             }
         }
 
+        history.add(new VirtualBlock(block));
+
         Vector relativePosition = region.getRelativePosition(block);
         algorithm.applyToBlock(block, relativePosition);
-        placedBlocks++;
+        parsedBlocks++;
     }
 
     public double getProgress() {
-        return (100d / totalBlocks) * placedBlocks;
+        return (100d / totalBlocks) * parsedBlocks;
     }
 
     @Override
     public int getParsedBlocks() {
-        return (int) placedBlocks;
+        return (int) parsedBlocks;
     }
 
     @Override
     public int getTotalBlocks() {
         return (int) totalBlocks;
+    }
+
+    @Override
+    public List<VirtualBlock> getUndo() {
+        return history;
     }
 
 }

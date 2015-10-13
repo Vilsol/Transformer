@@ -5,6 +5,7 @@ import me.vilsol.transformer.engine.selection.SelectionType;
 import me.vilsol.transformer.handlers.TransformerHandler;
 import me.vilsol.transformer.utils.BlockUtils;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.List;
@@ -15,13 +16,13 @@ public interface TransformerRegion {
 
     default List<Block> getTransparentBlocks(){
         List<Block> transparent = getEnclosedBlocks();
-        transparent.removeIf(b -> !BlockUtils.isTransparent(b.getType()));
+        transparent.removeIf(b -> !BlockUtils.isSensitive(b.getType()));
         return transparent;
     }
 
     default List<Block> getNormalBlocks(){
         List<Block> transparent = getEnclosedBlocks();
-        transparent.removeIf(b -> BlockUtils.isTransparent(b.getType()));
+        transparent.removeIf(b -> BlockUtils.isSensitive(b.getType()));
         return transparent;
     }
 
@@ -30,5 +31,7 @@ public interface TransformerRegion {
     void newInstance(TransformerHandler handler, ParamCallback<TransformerRegion> callback);
 
     SelectionType getRegionSelection();
+
+    ItemStack getIdentifierItem();
 
 }

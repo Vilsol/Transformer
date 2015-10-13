@@ -23,4 +23,7 @@ public enum RegionType {
         return region.getRegionSelection();
     }
 
+    public TransformerRegion getExample() {
+        return region;
+    }
 }

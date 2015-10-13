@@ -1,6 +1,6 @@
 name: Transformer
 main: me.vilsol.transformer.TransformerPlugin
-version: 0.0.5
+version: 0.0.6
 depends: [MenuEngine]
 commands:
   //:

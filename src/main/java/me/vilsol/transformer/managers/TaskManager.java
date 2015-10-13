@@ -66,7 +66,9 @@ public class TaskManager extends BukkitRunnable {
                 tasks.removeAll(toRemove);
 
                 if(System.currentTimeMillis() - start >= 50){
-                    System.err.println("Overload on " + i + " out of " + R.globalLimit + "!");
+                    if(tick % 20 == 0) {
+                        System.err.println("Overload on " + i + " out of " + R.globalLimit + "!");
+                    }
                     break;
                 }
             }

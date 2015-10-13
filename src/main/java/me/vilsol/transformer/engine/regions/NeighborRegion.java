@@ -1,5 +1,6 @@
 package me.vilsol.transformer.engine.regions;
 
+import me.vilsol.menuengine.utils.Builder;
 import me.vilsol.transformer.engine.ParamCallback;
 import me.vilsol.transformer.engine.selection.OnePointSelection;
 import me.vilsol.transformer.engine.selection.SelectionType;
@@ -7,11 +8,15 @@ import me.vilsol.transformer.engine.tasks.SearchNeighborsTask;
 import me.vilsol.transformer.handlers.PlayerHandler;
 import me.vilsol.transformer.handlers.TransformerHandler;
 import me.vilsol.transformer.managers.TaskManager;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NeighborRegion implements TransformerRegion {
@@ -73,6 +78,11 @@ public class NeighborRegion implements TransformerRegion {
     @Override
     public SelectionType getRegionSelection() {
         return SelectionType.ONE_POINT;
+    }
+
+    @Override
+    public ItemStack getIdentifierItem() {
+        return new Builder(Material.LEASH).name(ChatColor.DARK_PURPLE + "Neighbor Region").lore(Collections.singletonList(ChatColor.GRAY + "Search blocks around selected block recursively")).item();
     }
 
 }

@@ -10,10 +10,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class SearchNeighborsTask extends Task {
 
@@ -23,8 +21,7 @@ public class SearchNeighborsTask extends Task {
     private NeighborRegion region;
     private Material toReplace;
     private List<Block> enclosedBlocks;
-    private List<Block> searchAround;
-    private ListIterator<Block> i;
+    private LinkedBlockingQueue<Block> searchAround;
     private int searched = 0;
 
     public SearchNeighborsTask(TransformerHandler owner, List<Block> enclosedBlocks, NeighborRegion region, ParamCallback<TransformerRegion> callback) {
@@ -38,21 +35,22 @@ public class SearchNeighborsTask extends Task {
         this.region = region;
 
         toReplace = region.getPosition().getBlock().getType();
-        searchAround = new ArrayList<>(Collections.singleton(region.getPosition().getBlock()));
-        i = searchAround.listIterator();
-        i.next();
+        searchAround = new LinkedBlockingQueue<>(Collections.singleton(region.getPosition().getBlock()));
     }
 
     @Override
     public void tick() {
-        if(i.hasPrevious() && searched < SEARCH_LIMIT){
-            Block b = i.previous();
-            i.remove();
-            for (int n = 0; n < BlockFace.values().length; n++) {
+        if(searchAround.size() > 0 && searched < SEARCH_LIMIT){
+            Block b = searchAround.remove();
+            for (int n = 0; n < 6; n++) {
                 Block relative = b.getRelative(BlockFace.values()[n]);
                 if(relative.getType().equals(toReplace) && !enclosedBlocks.contains(relative)){
                     enclosedBlocks.add(relative);
-                    i.add(relative);
+                    try {
+                        searchAround.put(relative);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

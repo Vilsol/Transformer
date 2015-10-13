@@ -1,10 +1,7 @@
 package me.vilsol.transformer.gui;
 
 import me.vilsol.menuengine.engine.MenuModel;
-import me.vilsol.transformer.gui.controlcenter.SwitchToNeighbor;
-import me.vilsol.transformer.gui.controlcenter.TestItem;
-import me.vilsol.transformer.gui.controlcenter.Undo;
-import me.vilsol.transformer.gui.controlcenter.Wand;
+import me.vilsol.transformer.gui.controlcenter.*;
 import org.bukkit.ChatColor;
 
 public class ControlCenter extends MenuModel {
@@ -14,7 +11,9 @@ public class ControlCenter extends MenuModel {
 
         getMenu().addItem(TestItem.class, 0);
 
-        getMenu().addItem(SwitchToNeighbor.class, 2);
+        getMenu().addItem(SwitchRegion.class, 2);
+
+        getMenu().addItem(ChangeLimit.class, 4);
 
         getMenu().addItem(Undo.class, 8);
 

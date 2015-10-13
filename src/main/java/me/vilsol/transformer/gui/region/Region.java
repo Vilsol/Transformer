@@ -1,17 +1,18 @@
-package me.vilsol.transformer.gui.controlcenter;
+package me.vilsol.transformer.gui.region;
 
+import me.vilsol.menuengine.engine.BonusItem;
 import me.vilsol.menuengine.engine.MenuItem;
-import me.vilsol.menuengine.utils.Builder;
 import me.vilsol.transformer.engine.regions.RegionType;
 import me.vilsol.transformer.managers.HandlerManager;
 import me.vilsol.transformer.utils.ActionAPI;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-public class SwitchToNeighbor implements MenuItem {
+public class Region implements BonusItem<RegionType> {
+
+    private RegionType region;
 
     @Override
     public void registerItem() {
@@ -21,13 +22,18 @@ public class SwitchToNeighbor implements MenuItem {
     @Override
     public void execute(Player plr, ClickType click) {
         plr.closeInventory();
-        HandlerManager.getInstance().getHandler(plr).setRegionType(RegionType.NEIGHBOR);
-        ActionAPI.sendAction(plr, ChatColor.DARK_GREEN + "Switched to Neighbor region");
+        HandlerManager.getInstance().getHandler(plr).setRegionType(region);
+        ActionAPI.sendAction(plr, ChatColor.DARK_GREEN + "Switched to " + region.getExample().getIdentifierItem().getItemMeta().getDisplayName());
     }
 
     @Override
     public ItemStack getItem() {
-        return new Builder(Material.FENCE).name(ChatColor.AQUA + "Switch To Neighbor Region").item();
+        return region.getExample().getIdentifierItem();
+    }
+
+    @Override
+    public void setBonusData(RegionType region) {
+        this.region = region;
     }
 
 }

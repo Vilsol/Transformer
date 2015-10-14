@@ -54,6 +54,7 @@ public class TransformerPlugin extends JavaPlugin implements Listener {
         new Undo().registerItem();
         new Wand().registerItem();
         new ChangeLimit().registerItem();
+        new SwitchProgressBar().registerItem();
 
         new ControlCenter();
 

@@ -15,6 +15,8 @@ public class ControlCenter extends MenuModel {
 
         getMenu().addItem(ChangeLimit.class, 4);
 
+        getMenu().addItem(SwitchProgressBar.class, 6);
+
         getMenu().addItem(Undo.class, 8);
 
         getMenu().addItem(Wand.class, 49);

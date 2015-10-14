@@ -41,7 +41,7 @@ public class ChangeLimit implements MenuItem, ChatCallback {
 
     @Override
     public ItemStack getItem() {
-        return new Builder(Material.REDSTONE).name(ChatColor.DARK_BLUE + "Change Limit").item();
+        return new Builder(Material.REDSTONE).name(ChatColor.BLUE + "Change Limit").item();
     }
 
 }

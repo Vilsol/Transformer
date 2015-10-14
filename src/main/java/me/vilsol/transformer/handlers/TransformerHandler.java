@@ -17,6 +17,7 @@ public abstract class TransformerHandler<T> {
 
     private ActionAlgorithm algorithm = new ReplaceAlgorithm(new VirtualBlock(Material.STONE));
     private RegionType regionType = RegionType.CUBOID;
+    private boolean percentageProgress = true;
     private BuildTask lastTask;
 
     private Stack<List<VirtualBlock>> undoHistory = new Stack<>();
@@ -65,6 +66,14 @@ public abstract class TransformerHandler<T> {
 
     public Stack<List<VirtualBlock>> getUndoHistory() {
         return undoHistory;
+    }
+
+    public boolean isPercentageProgress() {
+        return percentageProgress;
+    }
+
+    public void setPercentageProgress(boolean percentageProgress) {
+        this.percentageProgress = percentageProgress;
     }
 
 }

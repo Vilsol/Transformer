@@ -3,8 +3,8 @@ package me.vilsol.transformer.utils;
 import org.bukkit.Material;
 import org.bukkit.block.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class BlockUtils {
 
@@ -60,6 +60,55 @@ public class BlockUtils {
      */
     public static boolean isSensitive(Material material) {
         return sensitiveBlocks.contains(material);
+    }
+
+    public static List<Block> cleanupSingles(List<Block> blocks, boolean x, boolean y, boolean z) {
+        if (!x && !y && !z) {
+            return blocks;
+        }
+
+        // TODO Test if its faster to use single iterator or multiple
+
+        if (x) {
+            Set<Tuple<Integer, Integer>> tuples = new HashSet<>();
+            blocks = blocks.stream().filter(block -> {
+                Tuple<Integer, Integer> tuple = new Tuple<>(block.getY(), block.getZ());
+                if (!tuples.contains(tuple)) {
+                    tuples.add(tuple);
+                    return true;
+                }
+
+                return false;
+            }).collect(Collectors.toList());
+        }
+
+        if (y) {
+            Set<Tuple<Integer, Integer>> tuples = new HashSet<>();
+            blocks = blocks.stream().filter(block -> {
+                Tuple<Integer, Integer> tuple = new Tuple<>(block.getX(), block.getZ());
+                if (!tuples.contains(tuple)) {
+                    tuples.add(tuple);
+                    return true;
+                }
+
+                return false;
+            }).collect(Collectors.toList());
+        }
+
+        if (z) {
+            Set<Tuple<Integer, Integer>> tuples = new HashSet<>();
+            blocks = blocks.stream().filter(block -> {
+                Tuple<Integer, Integer> tuple = new Tuple<>(block.getX(), block.getY());
+                if (!tuples.contains(tuple)) {
+                    tuples.add(tuple);
+                    return true;
+                }
+
+                return false;
+            }).collect(Collectors.toList());
+        }
+
+        return blocks;
     }
 
 }

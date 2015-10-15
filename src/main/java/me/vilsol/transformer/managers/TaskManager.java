@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 public class TaskManager extends BukkitRunnable {
 
@@ -24,6 +25,7 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private CopyOnWriteArrayList<Task> tasks = new CopyOnWriteArrayList<>();
+    private ArrayList<Task> toRemove = new ArrayList<>();
 
     private TaskManager() {
         runTaskTimer(TransformerPlugin.getInstance(), 0L, 1L);
@@ -37,6 +39,11 @@ public class TaskManager extends BukkitRunnable {
 
     @Override
     public void run() {
+        if(toRemove.size() > 0){
+            tasks.removeAll(toRemove);
+            toRemove.clear();
+        }
+
         if (tasks.size() > 0) {
             HashMap<Task, TransformerHandler<Player>> watchers = new HashMap<>();
             long start = System.currentTimeMillis();
@@ -140,6 +147,14 @@ public class TaskManager extends BukkitRunnable {
         }
 
         tick++;
+    }
+
+    public void cancelAllTasks() {
+        toRemove.addAll(tasks);
+    }
+
+    public void cancelTasksOf(TransformerHandler<Player> handler) {
+        toRemove.addAll(tasks.stream().filter(task -> task.getOwner().equals(handler)).collect(Collectors.toList()));
     }
 
 }

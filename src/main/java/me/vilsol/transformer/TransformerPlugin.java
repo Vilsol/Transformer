@@ -1,8 +1,10 @@
 package me.vilsol.transformer;
 
 import me.vilsol.menuengine.engine.MenuModel;
+import me.vilsol.transformer.gui.AlgorithmMenu;
 import me.vilsol.transformer.gui.ControlCenter;
 import me.vilsol.transformer.gui.RegionMenu;
+import me.vilsol.transformer.gui.algorithm.Algorithm;
 import me.vilsol.transformer.gui.controlcenter.*;
 import me.vilsol.transformer.gui.region.Region;
 import me.vilsol.transformer.listeners.WandListener;
@@ -50,17 +52,23 @@ public class TransformerPlugin extends JavaPlugin implements Listener {
     private void registerMenus() {
 
         new SwitchRegion().registerItem();
+        new SwitchAlgorithm().registerItem();
         new TestItem().registerItem();
         new Undo().registerItem();
         new Wand().registerItem();
         new ChangeLimit().registerItem();
         new SwitchProgressBar().registerItem();
+        new CancelAllTasks().registerItem();
 
         new ControlCenter();
 
         new Region().registerItem();
 
         new RegionMenu();
+
+        new Algorithm().registerItem();
+
+        new AlgorithmMenu();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

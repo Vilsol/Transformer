@@ -26,6 +26,10 @@ public class VirtualBlock {
         state = vb.getState();
     }
 
+    public VirtualBlock(Location location){
+        this(location.getBlock());
+    }
+
     public VirtualBlock(Block block) {
         loc = block.getLocation();
         mat = block.getType();

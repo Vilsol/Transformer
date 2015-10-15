@@ -1,10 +1,11 @@
 package me.vilsol.transformer.engine.tasks;
 
 import me.vilsol.transformer.engine.VirtualBlock;
-import me.vilsol.transformer.engine.algorithms.ActionAlgorithm;
+import me.vilsol.transformer.engine.algorithms.TransformerAlgorithm;
 import me.vilsol.transformer.engine.regions.TransformerRegion;
 import me.vilsol.transformer.handlers.PlayerHandler;
 import me.vilsol.transformer.handlers.TransformerHandler;
+import me.vilsol.transformer.utils.BlockUtils;
 import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class BuildTask extends Task {
 
     private TransformerRegion region;
-    private ActionAlgorithm algorithm;
+    private TransformerAlgorithm algorithm;
 
     private Iterator<Block> normalIterator;
     private Iterator<Block> transparentIterator;
@@ -27,17 +28,20 @@ public class BuildTask extends Task {
 
     private boolean normal;
 
-    public BuildTask(TransformerHandler owner, TransformerRegion region, ActionAlgorithm algorithm) {
+    public BuildTask(TransformerHandler owner, TransformerRegion region, TransformerAlgorithm algorithm) {
         this(owner, region, algorithm, null);
     }
 
-    public BuildTask(TransformerHandler owner, TransformerRegion region, ActionAlgorithm algorithm, PlayerHandler watcher) {
+    public BuildTask(TransformerHandler owner, TransformerRegion region, TransformerAlgorithm algorithm, PlayerHandler watcher) {
         super(owner, watcher);
         this.region = region;
         this.algorithm = algorithm;
 
         List<Block> normalBlocks = region.getNormalBlocks();
         List<Block> transparentBlocks = region.getTransparentBlocks();
+
+        normalBlocks = BlockUtils.cleanupSingles(normalBlocks, algorithm.singleX(), algorithm.singleY(), algorithm.singleZ());
+        transparentBlocks = BlockUtils.cleanupSingles(transparentBlocks, algorithm.singleX(), algorithm.singleY(), algorithm.singleZ());
 
         this.totalBlocks = normalBlocks.size() + transparentBlocks.size();
 
@@ -67,10 +71,11 @@ public class BuildTask extends Task {
             }
         }
 
-        history.add(new VirtualBlock(block));
-
         Vector relativePosition = region.getRelativePosition(block);
-        algorithm.applyToBlock(block, relativePosition);
+        List<VirtualBlock> before = algorithm.applyToBlock(block, relativePosition);
+        if(before != null){
+            history.addAll(before);
+        }
         parsedBlocks++;
     }
 

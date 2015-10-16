@@ -2,6 +2,7 @@ package me.vilsol.transformer.engine.algorithms;
 
 import me.vilsol.transformer.engine.ParamCallback;
 import me.vilsol.transformer.engine.VirtualBlock;
+import me.vilsol.transformer.engine.config.Configuration;
 import me.vilsol.transformer.handlers.TransformerHandler;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -9,24 +10,38 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public interface TransformerAlgorithm {
+public abstract class TransformerAlgorithm {
 
-    List<VirtualBlock> applyToBlock(Block b, Vector relativePosition);
+    private TransformerHandler owner;
 
-    void newInstance(TransformerHandler handler, ParamCallback<TransformerAlgorithm> callback);
+    public TransformerAlgorithm(TransformerHandler owner) {
+        this.owner = owner;
+    }
 
-    ItemStack getIdentifierItem();
+    public abstract List<VirtualBlock> applyToBlock(Block b, Vector relativePosition);
 
-    default boolean singleX() {
+    public abstract void newInstance(TransformerHandler handler, ParamCallback<TransformerAlgorithm> callback);
+
+    public abstract ItemStack getIdentifierItem();
+
+    public TransformerHandler getOwner() {
+        return owner;
+    }
+
+    public boolean singleX() {
         return false;
     }
 
-    default boolean singleY() {
+    public boolean singleY() {
         return false;
     }
 
-    default boolean singleZ() {
+    public boolean singleZ() {
         return false;
+    }
+
+    public List<Configuration> getConfigurations() {
+        return null;
     }
 
 }

@@ -1,4 +1,4 @@
-package me.vilsol.transformer.gui;
+package me.vilsol.transformer.gui.region;
 
 import me.vilsol.menuengine.engine.MenuModel;
 import me.vilsol.transformer.engine.regions.RegionType;

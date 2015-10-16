@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-public class TestItem implements MenuItem {
+public class Run implements MenuItem {
 
     @Override
     public void registerItem() {
@@ -38,7 +38,7 @@ public class TestItem implements MenuItem {
 
     @Override
     public ItemStack getItem() {
-        return new Builder(Material.STONE).name("TEST").item();
+        return new Builder(Material.FIREBALL).name("Run").item();
     }
 
 }

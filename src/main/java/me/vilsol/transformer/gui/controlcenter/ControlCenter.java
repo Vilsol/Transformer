@@ -1,7 +1,6 @@
-package me.vilsol.transformer.gui;
+package me.vilsol.transformer.gui.controlcenter;
 
 import me.vilsol.menuengine.engine.MenuModel;
-import me.vilsol.transformer.gui.controlcenter.*;
 import org.bukkit.ChatColor;
 
 public class ControlCenter extends MenuModel {
@@ -9,10 +8,8 @@ public class ControlCenter extends MenuModel {
     public ControlCenter() {
         super(45, ChatColor.DARK_AQUA + "Transformer Control Center");
 
-        getMenu().addItem(TestItem.class, 0);
-
-        getMenu().addItem(SwitchRegion.class, 2);
-        getMenu().addItem(SwitchAlgorithm.class, 3);
+        getMenu().addItem(SwitchRegion.class, 0);
+        getMenu().addItem(Algorithm.class, 2);
 
         getMenu().addItem(ChangeLimit.class, 4);
 
@@ -20,7 +17,9 @@ public class ControlCenter extends MenuModel {
 
         getMenu().addItem(Undo.class, 8);
 
-        getMenu().addItem(Wand.class, 40);
+        getMenu().addItem(Wand.class, 31);
+
+        getMenu().addItem(Run.class, 40);
 
         getMenu().addItem(CancelAllTasks.class, 44);
     }

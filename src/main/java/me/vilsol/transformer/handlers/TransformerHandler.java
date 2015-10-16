@@ -2,7 +2,7 @@ package me.vilsol.transformer.handlers;
 
 import me.vilsol.transformer.engine.VirtualBlock;
 import me.vilsol.transformer.engine.algorithms.TransformerAlgorithm;
-import me.vilsol.transformer.engine.algorithms.ReplaceAlgorithm;
+import me.vilsol.transformer.engine.algorithms.SetAlgorithm;
 import me.vilsol.transformer.engine.regions.RegionType;
 import me.vilsol.transformer.engine.selection.Selection;
 import me.vilsol.transformer.engine.tasks.BuildTask;
@@ -15,7 +15,7 @@ public abstract class TransformerHandler<T> {
 
     private Selection selection;
 
-    private TransformerAlgorithm algorithm = new ReplaceAlgorithm(new VirtualBlock(Material.STONE));
+    private TransformerAlgorithm algorithm = new SetAlgorithm(new VirtualBlock(Material.STONE), this);
     private RegionType regionType = RegionType.CUBOID;
     private boolean percentageProgress = true;
     private BuildTask lastTask;

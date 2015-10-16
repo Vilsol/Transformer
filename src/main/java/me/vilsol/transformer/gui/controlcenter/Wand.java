@@ -3,7 +3,6 @@ package me.vilsol.transformer.gui.controlcenter;
 import me.vilsol.menuengine.engine.MenuItem;
 import me.vilsol.menuengine.utils.Builder;
 import me.vilsol.transformer.R;
-import me.vilsol.transformer.utils.ActionAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -24,7 +23,6 @@ public class Wand implements MenuItem {
         plr.getInventory().remove(R.wand);
         plr.setItemInHand(R.wand.clone());
         plr.closeInventory();
-        ActionAPI.sendAction(plr, "Hello World");
     }
 
     @Override

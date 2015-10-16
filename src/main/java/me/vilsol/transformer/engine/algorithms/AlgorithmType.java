@@ -5,8 +5,8 @@ import me.vilsol.transformer.handlers.TransformerHandler;
 
 public enum AlgorithmType {
 
-    REPLACE(new ReplaceAlgorithm(null)),
-    OVERLAY(new OverlayAlgorithm(null));
+    SET(new SetAlgorithm(null, null)),
+    OVERLAY(new OverlayAlgorithm(null, null));
 
     private TransformerAlgorithm algorithm;
 

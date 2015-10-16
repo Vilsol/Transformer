@@ -1,4 +1,4 @@
-package me.vilsol.transformer.gui.algorithm;
+package me.vilsol.transformer.gui.algorithm.switchalgorithm;
 
 import me.vilsol.menuengine.engine.BonusItem;
 import me.vilsol.menuengine.engine.MenuItem;

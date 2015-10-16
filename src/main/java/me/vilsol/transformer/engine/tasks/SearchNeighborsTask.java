@@ -15,7 +15,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class SearchNeighborsTask extends Task {
 
-    private static final int SEARCH_LIMIT = 100000;
+    private static final int SEARCH_LIMIT = 50000;
 
     private ParamCallback<TransformerRegion> callback;
     private NeighborRegion region;

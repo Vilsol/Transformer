@@ -7,7 +7,7 @@ import me.vilsol.transformer.engine.VirtualBlock;
 import me.vilsol.transformer.engine.selection.OnePointSelection;
 import me.vilsol.transformer.engine.selection.Selection;
 import me.vilsol.transformer.engine.selection.TwoPointSelection;
-import me.vilsol.transformer.gui.ControlCenter;
+import me.vilsol.transformer.gui.controlcenter.ControlCenter;
 import me.vilsol.transformer.handlers.TransformerHandler;
 import me.vilsol.transformer.managers.HandlerManager;
 import me.vilsol.transformer.utils.ActionAPI;
@@ -20,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -93,6 +94,15 @@ public class WandListener implements Listener {
         if(event.getItemDrop().getItemStack().isSimilar(R.wand)){
             event.setCancelled(true);
             MenuModel.getMenu(ControlCenter.class).getMenu().showToPlayer(event.getPlayer());
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onSwitch(PlayerItemHeldEvent event){
+        if(event.getPlayer().getInventory().getItem(event.getNewSlot()) != null) {
+            if (event.getPlayer().getInventory().getItem(event.getNewSlot()).isSimilar(R.wand)) {
+                ActionAPI.sendAction(event.getPlayer(), ChatColor.GOLD + "Press Q To Open Control Center!");
+            }
         }
     }
 

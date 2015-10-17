@@ -3,14 +3,13 @@ package me.vilsol.transformer;
 import me.vilsol.menuengine.engine.MenuModel;
 import me.vilsol.transformer.gui.algorithm.AlgorithmMenu;
 import me.vilsol.transformer.gui.algorithm.BackToAlgorithmMenu;
-import me.vilsol.transformer.gui.algorithm.ConfigAlgorithm;
+import me.vilsol.transformer.gui.algorithm.ConfigurationMenuItem;
 import me.vilsol.transformer.gui.algorithm.SwitchAlgorithm;
-import me.vilsol.transformer.gui.algorithm.config.ConfigurationMenuItem;
-import me.vilsol.transformer.gui.algorithm.config.ConfigureAlgorithmMenu;
 import me.vilsol.transformer.gui.algorithm.switchalgorithm.SwitchAlgorithmMenu;
 import me.vilsol.transformer.gui.controlcenter.*;
 import me.vilsol.transformer.gui.region.Region;
 import me.vilsol.transformer.gui.region.RegionMenu;
+import me.vilsol.transformer.listeners.PickBlockListener;
 import me.vilsol.transformer.listeners.WandListener;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -51,6 +50,7 @@ public class TransformerPlugin extends JavaPlugin implements Listener {
 
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new WandListener(), this);
+        getServer().getPluginManager().registerEvents(new PickBlockListener(), this);
     }
 
     private void registerMenus() {
@@ -65,16 +65,14 @@ public class TransformerPlugin extends JavaPlugin implements Listener {
         new CancelAllTasks().registerItem();
         new me.vilsol.transformer.gui.algorithm.switchalgorithm.Algorithm().registerItem();
         new Region().registerItem();
-        new ConfigurationMenuItem(null).registerItem();
+        new ConfigurationMenuItem(null, null).registerItem();
         new BackToAlgorithmMenu().registerItem();
-        new ConfigAlgorithm().registerItem();
         new Algorithm().registerItem();
         new BackToControlCenter().registerItem();
 
         new ControlCenter();
         new RegionMenu();
         new SwitchAlgorithmMenu();
-        new ConfigureAlgorithmMenu();
         new SwitchAlgorithmMenu();
         new AlgorithmMenu();
 

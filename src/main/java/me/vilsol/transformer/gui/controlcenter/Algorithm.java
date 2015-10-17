@@ -1,7 +1,7 @@
 package me.vilsol.transformer.gui.controlcenter;
 
+import me.vilsol.menuengine.engine.DynamicMenuModel;
 import me.vilsol.menuengine.engine.MenuItem;
-import me.vilsol.menuengine.engine.MenuModel;
 import me.vilsol.menuengine.utils.Builder;
 import me.vilsol.transformer.gui.algorithm.AlgorithmMenu;
 import org.bukkit.ChatColor;
@@ -19,7 +19,7 @@ public class Algorithm implements MenuItem {
 
     @Override
     public void execute(Player plr, ClickType click) {
-        MenuModel.getMenu(AlgorithmMenu.class).getMenu().showToPlayer(plr);
+        DynamicMenuModel.createMenu(plr, AlgorithmMenu.class).showToPlayer(plr);
     }
 
     @Override

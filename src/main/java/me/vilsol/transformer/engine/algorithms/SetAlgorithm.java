@@ -4,7 +4,7 @@ import me.vilsol.menuengine.utils.Builder;
 import me.vilsol.transformer.engine.ParamCallback;
 import me.vilsol.transformer.engine.VirtualBlock;
 import me.vilsol.transformer.engine.config.Configuration;
-import me.vilsol.transformer.engine.config.configurations.IntegerConfiguration;
+import me.vilsol.transformer.engine.config.configurations.BlockConfiguration;
 import me.vilsol.transformer.handlers.TransformerHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,11 +18,15 @@ import java.util.List;
 
 public class SetAlgorithm extends TransformerAlgorithm {
 
+    private BlockConfiguration replacementConfig;
+
     private VirtualBlock replacement;
 
     public SetAlgorithm(VirtualBlock replacement, TransformerHandler owner) {
         super(owner);
+
         this.replacement = replacement;
+        this.replacementConfig = new BlockConfiguration("Block", Collections.singletonList("Block to set to"), block -> this.replacement = block);
     }
 
     @Override
@@ -53,7 +57,7 @@ public class SetAlgorithm extends TransformerAlgorithm {
     @Override
     public List<Configuration> getConfigurations() {
         List<Configuration> configurations = new ArrayList<>();
-        configurations.add(new IntegerConfiguration(1, Material.STONE, "Block", Collections.singletonList("Block to set to"), ChatColor.DARK_AQUA + "Enter new block ID", mat -> this.replacement.setMaterial(Material.getMaterial(mat))));
+        configurations.add(replacementConfig);
         return configurations;
     }
 

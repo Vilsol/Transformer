@@ -4,6 +4,7 @@ import me.vilsol.menuengine.engine.MenuModel;
 import me.vilsol.transformer.R;
 import me.vilsol.transformer.TransformerPlugin;
 import me.vilsol.transformer.engine.VirtualBlock;
+import me.vilsol.transformer.engine.config.configurations.BlockConfiguration;
 import me.vilsol.transformer.engine.selection.OnePointSelection;
 import me.vilsol.transformer.engine.selection.Selection;
 import me.vilsol.transformer.engine.selection.TwoPointSelection;
@@ -14,6 +15,7 @@ import me.vilsol.transformer.utils.ActionAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -24,10 +26,13 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 public class WandListener implements Listener {
+
+    public static HashMap<HumanEntity, BlockConfiguration> locked_players = new HashMap<>();
 
     private List<Block> pinging = new ArrayList<>();
 
@@ -38,6 +43,11 @@ public class WandListener implements Listener {
 
             if(targetBlock == null){
                 targetBlock = event.getPlayer().getTargetBlock((Set<Material>) null, 200);
+            }
+
+            if(locked_players.containsKey(event.getPlayer())){
+                locked_players.get(event.getPlayer()).changeBlock(new VirtualBlock(targetBlock), event.getPlayer());
+                return;
             }
 
             boolean ok = false;

@@ -1,7 +1,7 @@
 package me.vilsol.transformer.gui.algorithm;
 
+import me.vilsol.menuengine.engine.DynamicMenuModel;
 import me.vilsol.menuengine.engine.MenuItem;
-import me.vilsol.menuengine.engine.MenuModel;
 import me.vilsol.menuengine.utils.Builder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,7 +18,7 @@ public class BackToAlgorithmMenu implements MenuItem {
 
     @Override
     public void execute(Player plr, ClickType click) {
-        MenuModel.getMenu(AlgorithmMenu.class).getMenu().showToPlayer(plr);
+        DynamicMenuModel.createMenu(plr, AlgorithmMenu.class).showToPlayer(plr);
     }
 
     @Override

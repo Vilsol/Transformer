@@ -20,7 +20,7 @@ public abstract class ChatConfiguration<T> extends Configuration<T> implements C
     }
 
     @Override
-    public void onClick(Player player) {
+    protected void onClick(Player player) {
         player.closeInventory();
         ActionAPI.sendAction(player, message);
         ChatCallback.locked_players.put(player, this);
